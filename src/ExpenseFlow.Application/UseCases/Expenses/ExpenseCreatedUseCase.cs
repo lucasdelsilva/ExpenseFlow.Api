@@ -1,39 +1,30 @@
 ﻿using ExpenseFlow.Communication.Request;
 using ExpenseFlow.Communication.Response;
-using ExpenseFlow.Communication.Response.Errors;
+using ExpenseFlow.Exception.ExceptionBase;
 
 namespace ExpenseFlow.Application.UseCases.Expenses;
 public class ExpenseCreatedUseCase
 {
     public ResponseExpensesCreatedModel Execute(RequestExpensesCreatedModel request)
     {
-        var responseModelErrors = new ResponseErrors();
-
-        ValidatorModel(request, responseModelErrors.Errors);
+        ValidatorModel(request);
         return new ResponseExpensesCreatedModel();
     }
 
-    private void ValidatorModel(RequestExpensesCreatedModel request, List<Error> errors)
+    private void ValidatorModel(RequestExpensesCreatedModel request)
     {
         var validator = new ExpenseCreatedValidator();
+
         var result = validator.Validate(request);
-
-
-        foreach (var item in result.Errors)
+        if (!result.IsValid)
         {
-            var errorList = new Error
+            var objErros = new List<Object>();
+            foreach (var item in result.Errors)
             {
-                ErrorMessage = item.ErrorMessage,
-                NameProperty = item.PropertyName
-            };
-
-            errors.Add(errorList);
+                var objModel = new { item.PropertyName, Message = item.ErrorMessage };
+                objErros.Add(objModel);
+            }
+            throw new ErrorOnValidationException(objErros);
         }
-        newArgumentEx(errors);
-    }
-
-    private void newArgumentEx(List<Error> errors)
-    {
-        throw new NotImplementedException();
     }
 }
