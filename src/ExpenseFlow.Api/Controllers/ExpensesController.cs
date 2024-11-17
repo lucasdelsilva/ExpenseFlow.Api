@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ExpenseFlow.Api.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/expenses")]
 [ApiController]
 public class ExpensesController : ControllerBase
 {
