@@ -19,6 +19,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseFlow.Communication",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseFlow.Exception", "src\ExpenseFlow.Exception\ExpenseFlow.Exception.csproj", "{D577DDDA-9167-49EE-9BA2-DE1310FA211E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Validators.Tests", "tests\Validators.Testes\Validators.Tests.csproj", "{16A1388B-DA78-4047-8989-E7D79C00D513}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonTests", "tests\CommonTests\CommonTests.csproj", "{EB034FF8-61D4-4C72-8AC0-DAD9656D8A7D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +53,14 @@ Global
 		{D577DDDA-9167-49EE-9BA2-DE1310FA211E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D577DDDA-9167-49EE-9BA2-DE1310FA211E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D577DDDA-9167-49EE-9BA2-DE1310FA211E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{16A1388B-DA78-4047-8989-E7D79C00D513}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{16A1388B-DA78-4047-8989-E7D79C00D513}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{16A1388B-DA78-4047-8989-E7D79C00D513}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{16A1388B-DA78-4047-8989-E7D79C00D513}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB034FF8-61D4-4C72-8AC0-DAD9656D8A7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB034FF8-61D4-4C72-8AC0-DAD9656D8A7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB034FF8-61D4-4C72-8AC0-DAD9656D8A7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB034FF8-61D4-4C72-8AC0-DAD9656D8A7D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,5 +72,7 @@ Global
 		{4270F442-9889-46C1-96D1-8540D83CACD8} = {F3D3FB1C-13D8-4BC4-B77E-B8AA400DFADA}
 		{65E4B14A-CE49-42B0-945C-CF01204A2BD3} = {F3D3FB1C-13D8-4BC4-B77E-B8AA400DFADA}
 		{D577DDDA-9167-49EE-9BA2-DE1310FA211E} = {F3D3FB1C-13D8-4BC4-B77E-B8AA400DFADA}
+		{16A1388B-DA78-4047-8989-E7D79C00D513} = {AB82D03B-C2C9-49AA-A62C-C6DEF577A64A}
+		{EB034FF8-61D4-4C72-8AC0-DAD9656D8A7D} = {AB82D03B-C2C9-49AA-A62C-C6DEF577A64A}
 	EndGlobalSection
 EndGlobal
