@@ -1,10 +1,15 @@
 using ExpenseFlow.Api.Filters;
 using ExpenseFlow.Api.Middleware;
+using ExpenseFlow.Application;
+using ExpenseFlow.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add dependency Interfaces.
+builder.Services.AddApplication();
+builder.Services.AddInfrastructure(builder.Configuration);
 
+// Add services to the container.
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

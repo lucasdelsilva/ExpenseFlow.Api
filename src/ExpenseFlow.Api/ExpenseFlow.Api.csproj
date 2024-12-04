@@ -1,20 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="7.0.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="7.0.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ExpenseFlow.Application\ExpenseFlow.Application.csproj" />
-    <ProjectReference Include="..\ExpenseFlow.Communication\ExpenseFlow.Communication.csproj" />
-    <ProjectReference Include="..\ExpenseFlow.Exception\ExpenseFlow.Exception.csproj" />
-    <ProjectReference Include="..\ExpenseFlow.Infrastructure\ExpenseFlow.Infrastructure.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\ExpenseFlow.Application\ExpenseFlow.Application.csproj" />
+		<ProjectReference Include="..\ExpenseFlow.Communication\ExpenseFlow.Communication.csproj" />
+		<ProjectReference Include="..\ExpenseFlow.Exception\ExpenseFlow.Exception.csproj" />
+	</ItemGroup>
 
 </Project>
