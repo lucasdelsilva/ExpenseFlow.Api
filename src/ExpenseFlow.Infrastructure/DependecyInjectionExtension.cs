@@ -9,10 +9,10 @@ using Microsoft.Extensions.DependencyInjection;
 namespace ExpenseFlow.Infrastructure;
 public static class DependecyInjectionExtension
 {
-    public static void AddInfrastructure(this IServiceCollection serviceDescriptors, IConfiguration configuration)
+    public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        AddRepositories(serviceDescriptors);
-        AddDbContext(serviceDescriptors, configuration);
+        AddRepositories(services);
+        AddDbContext(services, configuration);
     }
 
     private static void AddRepositories(IServiceCollection serviceDescriptors)

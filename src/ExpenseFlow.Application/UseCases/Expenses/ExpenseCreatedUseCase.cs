@@ -1,4 +1,5 @@
-﻿using ExpenseFlow.Application.UseCases.Expenses.Interfaces;
+﻿using AutoMapper;
+using ExpenseFlow.Application.UseCases.Expenses.Interfaces;
 using ExpenseFlow.Communication.Request;
 using ExpenseFlow.Communication.Response;
 using ExpenseFlow.Domain.Entities;
@@ -11,29 +12,24 @@ public class ExpenseCreatedUseCase : IExpenseCreatedUserCase
 {
     private readonly IExpensesRepository _expensesRepository;
     private readonly IUnitOfWork _unitOfWork;
-    public ExpenseCreatedUseCase(IExpensesRepository expensesRepository, IUnitOfWork unitOfWork)
+    private readonly IMapper _mapper;
+    public ExpenseCreatedUseCase(IExpensesRepository expensesRepository, IUnitOfWork unitOfWork, IMapper mapper)
     {
         _expensesRepository = expensesRepository;
         _unitOfWork = unitOfWork;
+        _mapper = mapper;
     }
 
     public async Task<ResponseExpensesCreatedModel> Execute(RequestExpensesCreatedModel request)
     {
         ValidatorModel(request);
 
-        var expense = new Expense
-        {
-            Amount = request.Amount,
-            Date = DateTime.UtcNow.AddDays(-1),
-            Description = request.Description,
-            PaymentType = request.PaymentType,
-            Title = request.Title
-        };
+        var expense = _mapper.Map<Expense>(request);
 
-        _expensesRepository.Create(expense);
-        _unitOfWork.Commit();
+        await _expensesRepository.Create(expense);
+        await _unitOfWork.Commit();
 
-        return await Task.FromResult(new ResponseExpensesCreatedModel());
+        return await Task.FromResult(_mapper.Map<ResponseExpensesCreatedModel>(expense));
     }
 
     private void ValidatorModel(RequestExpensesCreatedModel request)
