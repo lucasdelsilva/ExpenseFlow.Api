@@ -1,4 +1,4 @@
-﻿using ExpenseFlow.Application.UseCases.Expenses;
+﻿using ExpenseFlow.Application.UseCases.Expenses.Interfaces;
 using ExpenseFlow.Communication.Request;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,11 +9,9 @@ namespace ExpenseFlow.Api.Controllers;
 public class ExpensesController : ControllerBase
 {
     [HttpPost]
-    public IActionResult Created([FromBody] RequestExpensesCreatedModel request)
+    public async Task<IActionResult> Created([FromServices] IExpenseCreatedUserCase useCase, [FromBody] RequestExpensesCreatedModel request)
     {
-        var useCase = new ExpenseCreatedUseCase();
-        var response = useCase.Execute(request);
-
+        var response = await useCase.Execute(request);
         return Created(string.Empty, response);
     }
 }

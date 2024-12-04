@@ -1,14 +1,34 @@
-﻿using ExpenseFlow.Communication.Request;
+﻿using ExpenseFlow.Application.UseCases.Expenses.Interfaces;
+using ExpenseFlow.Communication.Request;
 using ExpenseFlow.Communication.Response;
+using ExpenseFlow.Domain.Entities;
+using ExpenseFlow.Domain.Repositories.Expenses;
 using ExpenseFlow.Exception.ExceptionBase;
 
 namespace ExpenseFlow.Application.UseCases.Expenses;
-public class ExpenseCreatedUseCase
+public class ExpenseCreatedUseCase : IExpenseCreatedUserCase
 {
-    public ResponseExpensesCreatedModel Execute(RequestExpensesCreatedModel request)
+    private readonly IExpensesRepository _expensesRepository;
+    public ExpenseCreatedUseCase(IExpensesRepository expensesRepository)
+    {
+        _expensesRepository = expensesRepository;
+    }
+
+    public async Task<ResponseExpensesCreatedModel> Execute(RequestExpensesCreatedModel request)
     {
         ValidatorModel(request);
-        return new ResponseExpensesCreatedModel();
+
+        var expense = new Expense
+        {
+            Amount = request.Amount,
+            Date = DateTime.UtcNow.AddDays(-1),
+            Description = request.Description,
+            PaymentType = request.PaymentType,
+            Title = request.Title
+        };
+
+        _expensesRepository.Create(expense);
+        return await Task.FromResult(new ResponseExpensesCreatedModel());
     }
 
     private void ValidatorModel(RequestExpensesCreatedModel request)
