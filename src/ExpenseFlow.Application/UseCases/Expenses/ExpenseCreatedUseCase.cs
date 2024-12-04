@@ -3,15 +3,18 @@ using ExpenseFlow.Communication.Request;
 using ExpenseFlow.Communication.Response;
 using ExpenseFlow.Domain.Entities;
 using ExpenseFlow.Domain.Repositories.Expenses;
+using ExpenseFlow.Domain.Repositories.Interfaces;
 using ExpenseFlow.Exception.ExceptionBase;
 
 namespace ExpenseFlow.Application.UseCases.Expenses;
 public class ExpenseCreatedUseCase : IExpenseCreatedUserCase
 {
     private readonly IExpensesRepository _expensesRepository;
-    public ExpenseCreatedUseCase(IExpensesRepository expensesRepository)
+    private readonly IUnitOfWork _unitOfWork;
+    public ExpenseCreatedUseCase(IExpensesRepository expensesRepository, IUnitOfWork unitOfWork)
     {
         _expensesRepository = expensesRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<ResponseExpensesCreatedModel> Execute(RequestExpensesCreatedModel request)
@@ -28,6 +31,8 @@ public class ExpenseCreatedUseCase : IExpenseCreatedUserCase
         };
 
         _expensesRepository.Create(expense);
+        _unitOfWork.Commit();
+
         return await Task.FromResult(new ResponseExpensesCreatedModel());
     }
 

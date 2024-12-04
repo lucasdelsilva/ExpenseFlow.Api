@@ -1,4 +1,5 @@
 ﻿using ExpenseFlow.Domain.Repositories.Expenses;
+using ExpenseFlow.Domain.Repositories.Interfaces;
 using ExpenseFlow.Infrastructure.DataAccess;
 using ExpenseFlow.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +18,7 @@ public static class DependecyInjectionExtension
     private static void AddRepositories(IServiceCollection serviceDescriptors)
     {
         serviceDescriptors.AddScoped<IExpensesRepository, ExpensesRepository>();
+        serviceDescriptors.AddScoped<IUnitOfWork, UnitOfWork>();
     }
 
     private static void AddDbContext(IServiceCollection serviceDescriptors, IConfiguration configuration)
