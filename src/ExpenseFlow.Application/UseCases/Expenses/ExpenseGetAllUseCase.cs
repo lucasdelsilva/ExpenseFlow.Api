@@ -6,9 +6,9 @@ using ExpenseFlow.Domain.Repositories.Expenses;
 namespace ExpenseFlow.Application.UseCases.Expenses;
 public class ExpenseGetAllUseCase : IExpenseGetAllUseCase
 {
-    private readonly IExpensesRepository _expensesRepository;
+    private readonly IExpensesReadOnlyRepository _expensesRepository;
     private readonly IMapper _mapper;
-    public ExpenseGetAllUseCase(IExpensesRepository expensesRepository, IMapper mapper)
+    public ExpenseGetAllUseCase(IExpensesReadOnlyRepository expensesRepository, IMapper mapper)
     {
         _expensesRepository = expensesRepository;
         _mapper = mapper;
