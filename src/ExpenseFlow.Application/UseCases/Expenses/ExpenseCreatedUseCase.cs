@@ -8,7 +8,7 @@ using ExpenseFlow.Domain.Repositories.Interfaces;
 using ExpenseFlow.Exception.ExceptionBase;
 
 namespace ExpenseFlow.Application.UseCases.Expenses;
-public class ExpenseCreatedUseCase : IExpenseCreatedUserCase
+public class ExpenseCreatedUseCase : IExpenseCreateUseCase
 {
     private readonly IExpensesRepository _expensesRepository;
     private readonly IUnitOfWork _unitOfWork;
@@ -20,7 +20,7 @@ public class ExpenseCreatedUseCase : IExpenseCreatedUserCase
         _mapper = mapper;
     }
 
-    public async Task<ResponseExpensesCreatedModel> Execute(RequestExpensesCreatedModel request)
+    public async Task<ResponseExpensesCreatedJson> Create(RequestExpensesCreatedModel request)
     {
         ValidatorModel(request);
 
@@ -29,7 +29,7 @@ public class ExpenseCreatedUseCase : IExpenseCreatedUserCase
         await _expensesRepository.Create(expense);
         await _unitOfWork.Commit();
 
-        return await Task.FromResult(_mapper.Map<ResponseExpensesCreatedModel>(expense));
+        return await Task.FromResult(_mapper.Map<ResponseExpensesCreatedJson>(expense));
     }
 
     private void ValidatorModel(RequestExpensesCreatedModel request)

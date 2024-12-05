@@ -21,6 +21,9 @@ public class AutoMapping : Profile
     private void EntityToResponse()
     {
         // Mapeamento de Expense para ResponseExpensesCreatedModel
-        CreateMap<Expense, ResponseExpensesCreatedModel>();
+        CreateMap<Expense, ResponseExpensesCreatedJson>();
+        CreateMap<Expense, ResponseShortExpenseJson>();
+        CreateMap<Expense, ResponseExpensesJson>();
+        CreateMap<Expense, ResponseExpenseJson>();
     }
 }

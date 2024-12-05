@@ -19,6 +19,8 @@ public static class DependecyInjectionExtension
 
     public static void AddUseCases(IServiceCollection serviceDescriptors)
     {
-        serviceDescriptors.AddScoped<IExpenseCreatedUserCase, ExpenseCreatedUseCase>();
+        serviceDescriptors.AddScoped<IExpenseCreateUseCase, ExpenseCreatedUseCase>();
+        serviceDescriptors.AddScoped<IExpenseGetAllUseCase, ExpenseGetAllUseCase>();
+        serviceDescriptors.AddScoped<IExpenseGetByIdUseCase, ExpenseGetByIdUseCase>();
     }
 }
