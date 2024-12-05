@@ -2,7 +2,7 @@
 using ExpenseFlow.Communication.Response;
 
 namespace ExpenseFlow.Application.UseCases.Expenses.Interfaces;
-public interface IExpenseCreatedUserCase
+public interface IExpenseCreateUseCase
 {
-    Task<ResponseExpensesCreatedModel> Execute(RequestExpensesCreatedModel request);
+    Task<ResponseExpensesCreatedJson> Create(RequestExpensesCreatedModel request);
 }

@@ -16,14 +16,20 @@ public class ExceptionFilter : IExceptionFilter
             ThrowUnknownError(context);
     }
 
-    private void HandleProjectExeption(ExceptionContext context)
+    private static void HandleProjectExeption(ExceptionContext context)
     {
-        if (context.Exception is ErrorOnValidationException)
+        if (context.Exception is ErrorOnValidationException erros)
         {
-            var ex = (ErrorOnValidationException)context.Exception;
-            var errorMessage = new ResponseErrorModel(ex.Erros);
+            var errorMessage = new ResponseErrorModel(erros.Erros);
 
             context.HttpContext.Response.StatusCode = StatusCodes.Status400BadRequest;
+            context.Result = new BadRequestObjectResult(errorMessage);
+        }
+        else if (context.Exception is NotFoundException notFoundException)
+        {
+            var errorMessage = new ResponseErrorModel(notFoundException.Message);
+
+            context.HttpContext.Response.StatusCode = StatusCodes.Status404NotFound;
             context.Result = new BadRequestObjectResult(errorMessage);
         }
         else
@@ -35,7 +41,7 @@ public class ExceptionFilter : IExceptionFilter
         }
     }
 
-    private void ThrowUnknownError(ExceptionContext context)
+    private static void ThrowUnknownError(ExceptionContext context)
     {
         var message = new ResponseErrorModel(ResourceErrorMessages.UNKNOWN_ERROR);
 
