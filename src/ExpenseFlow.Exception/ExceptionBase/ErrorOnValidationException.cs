@@ -1,10 +1,15 @@
-﻿namespace ExpenseFlow.Exception.ExceptionBase;
+﻿using System.Net;
+
+namespace ExpenseFlow.Exception.ExceptionBase;
 public class ErrorOnValidationException : ExpenseFlowException
 {
-    public List<Object> Erros { get; set; }
+    private List<object> Erros { get; set; }
+    public override int StatusCode => (int)HttpStatusCode.BadRequest;
 
-    public ErrorOnValidationException(List<Object> errorMessages) : base(string.Empty)
+    public ErrorOnValidationException(List<object> errorMessages) : base(string.Empty) => Erros = errorMessages;
+
+    public override List<object> GetErros()
     {
-        Erros = errorMessages;
+        return Erros;
     }
 }

@@ -10,10 +10,10 @@ using ExpenseFlow.Exception.ExceptionBase;
 namespace ExpenseFlow.Application.UseCases.Expenses;
 public class ExpenseCreatedUseCase : IExpenseCreateUseCase
 {
-    private readonly IExpensesRepository _expensesRepository;
+    private readonly IExpensesWriteOnlyRepository _expensesRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
-    public ExpenseCreatedUseCase(IExpensesRepository expensesRepository, IUnitOfWork unitOfWork, IMapper mapper)
+    public ExpenseCreatedUseCase(IExpensesWriteOnlyRepository expensesRepository, IUnitOfWork unitOfWork, IMapper mapper)
     {
         _expensesRepository = expensesRepository;
         _unitOfWork = unitOfWork;

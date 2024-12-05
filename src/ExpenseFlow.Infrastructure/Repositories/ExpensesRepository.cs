@@ -4,7 +4,7 @@ using ExpenseFlow.Infrastructure.DataAccess;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExpenseFlow.Infrastructure.Repositories;
-internal class ExpensesRepository : IExpensesRepository
+internal class ExpensesRepository : IExpensesWriteOnlyRepository, IExpensesReadOnlyRepository
 {
     private readonly ApplicationDbContext _dbContext;
     public ExpensesRepository(ApplicationDbContext dbContext)
