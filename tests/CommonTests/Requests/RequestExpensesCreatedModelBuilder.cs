@@ -5,9 +5,9 @@ using ExpenseFlow.Communication.Request;
 namespace CommonTests.Requests;
 public class RequestExpensesCreatedModelBuilder
 {
-    public static RequestExpensesCreatedModel Request()
+    public static RequestExpenseCreateOrUpdateJson Request()
     {
-        return new Faker<RequestExpensesCreatedModel>()
+        return new Faker<RequestExpenseCreateOrUpdateJson>()
             .RuleFor(r => r.Title, faker => faker.Commerce.ProductName())
             .RuleFor(r => r.Description, faker => faker.Commerce.ProductDescription())
             .RuleFor(r => r.Date, faker => faker.Date.Past())

@@ -2,10 +2,10 @@
 using ExpenseFlow.Exception;
 using FluentValidation;
 
-namespace ExpenseFlow.Application.UseCases.Expenses;
-public class ExpenseCreatedValidator : AbstractValidator<RequestExpensesCreatedModel>
+namespace ExpenseFlow.Application.UseCases.Expenses.Validator;
+public class ExpenseValidator : AbstractValidator<RequestExpenseCreateOrUpdateJson>
 {
-    public ExpenseCreatedValidator()
+    public ExpenseValidator()
     {
         RuleFor(prop => prop.Title).NotEmpty().WithMessage(ResourceErrorMessages.TITLE_REQUIRED);
         RuleFor(prop => prop.Amount).GreaterThan(0).WithMessage(ResourceErrorMessages.AMOUNT_MUST_BE_GREATER_THAN_ZERO);
