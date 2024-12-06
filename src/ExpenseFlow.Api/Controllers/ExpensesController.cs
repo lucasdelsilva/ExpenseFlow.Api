@@ -12,9 +12,9 @@ namespace ExpenseFlow.Api.Controllers;
 public class ExpensesController : ControllerBase
 {
     [HttpPost]
-    [ProducesResponseType(typeof(ResponseExpensesCreatedJson), StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ResponseExpenseCreateJson), StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ResponseErrorModel), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Created([FromServices] IExpenseCreateUseCase useCase, [FromBody] RequestExpensesCreatedModel request)
+    public async Task<IActionResult> Created([FromServices] IExpenseCreateUseCase useCase, [FromBody] RequestExpenseCreateOrUpdateJson request)
     {
         var response = await useCase.Create(request);
         return Created(string.Empty, response);
@@ -43,5 +43,26 @@ public class ExpensesController : ControllerBase
             return Ok(response);
 
         return NotFound(ResourceErrorMessages.EXPENSE_NOT_FOUND);
+    }
+
+    [HttpDelete]
+    [Route("{id}")]
+    [ProducesResponseType(typeof(ResponseExpenseJson), StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ResponseErrorModel), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> DeleteById([FromServices] IExpenseDeleteUseCase useCase, [FromRoute] long id)
+    {
+        await useCase.Delete(id);
+        return NoContent();
+    }
+
+    [HttpPut]
+    [Route("{id}")]
+    [ProducesResponseType(typeof(ResponseExpenseJson), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseErrorModel), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ResponseErrorModel), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Update([FromServices] IExpenseUpdateUseCase useCase, [FromRoute] long id, [FromBody] RequestExpenseCreateOrUpdateJson request)
+    {
+        await useCase.Update(id, request);
+        return NoContent();
     }
 }

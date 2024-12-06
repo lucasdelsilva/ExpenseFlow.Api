@@ -2,35 +2,38 @@
 using ExpenseFlow.Application.UseCases.Expenses.Interfaces;
 using ExpenseFlow.Application.UseCases.Expenses.Validator;
 using ExpenseFlow.Communication.Request;
-using ExpenseFlow.Communication.Response;
-using ExpenseFlow.Domain.Entities;
 using ExpenseFlow.Domain.Repositories.Expenses;
 using ExpenseFlow.Domain.Repositories.Interfaces;
+using ExpenseFlow.Exception;
 using ExpenseFlow.Exception.ExceptionBase;
 
 namespace ExpenseFlow.Application.UseCases.Expenses;
-public class ExpenseCreatedUseCase : IExpenseCreateUseCase
+public class ExpenseUpdateUseCase : IExpenseUpdateUseCase
 {
-    private readonly IExpensesWriteOnlyRepository _expensesRepository;
+    private readonly IExpensesWriteOnlyRepository _expensesWriteOnlyRepository;
+    private readonly IExpensesReadOnlyRepository _expensesReadOnlyRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
-    public ExpenseCreatedUseCase(IExpensesWriteOnlyRepository expensesRepository, IUnitOfWork unitOfWork, IMapper mapper)
+    public ExpenseUpdateUseCase(IExpensesWriteOnlyRepository expensesWriteOnlyRepository, IExpensesReadOnlyRepository expensesRepository, IUnitOfWork unitOfWork, IMapper mapper)
     {
-        _expensesRepository = expensesRepository;
+        _expensesWriteOnlyRepository = expensesWriteOnlyRepository;
+        _expensesReadOnlyRepository = expensesRepository;
         _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
 
-    public async Task<ResponseExpenseCreateJson> Create(RequestExpenseCreateOrUpdateJson request)
+    public async Task Update(long id, RequestExpenseCreateOrUpdateJson request)
     {
         Validate(request);
 
-        var expense = _mapper.Map<Expense>(request);
+        var expense = await _expensesReadOnlyRepository.UpdateOrRemoveGetById(id);
+        if (expense is null)
+            throw new NotFoundException(ResourceErrorMessages.EXPENSE_NOT_FOUND);
 
-        await _expensesRepository.Create(expense);
+        _mapper.Map(request, expense);
+        _expensesWriteOnlyRepository.Update(expense);
+
         await _unitOfWork.Commit();
-
-        return await Task.FromResult(_mapper.Map<ResponseExpenseCreateJson>(expense));
     }
 
     private void Validate(RequestExpenseCreateOrUpdateJson request)
