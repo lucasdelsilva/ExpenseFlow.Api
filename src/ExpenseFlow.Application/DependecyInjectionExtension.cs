@@ -28,7 +28,8 @@ public static class DependecyInjectionExtension
         serviceDescriptors.AddScoped<IExpenseDeleteUseCase, ExpenseDeleteUseCase>();
         serviceDescriptors.AddScoped<IExpenseUpdateUseCase, ExpenseUpdateUseCase>();
 
-        //Report expenses - Excel
+        //Report expenses - Excel or PDF
         serviceDescriptors.AddScoped<IGenerateExpensesReportExcelUseCase, GenerateExpensesReportExcelUseCase>();
+        serviceDescriptors.AddScoped<IGenerateExpensesReportPdfUseCase, GenerateExpensesReportPdfUseCase>();
     }
 }
