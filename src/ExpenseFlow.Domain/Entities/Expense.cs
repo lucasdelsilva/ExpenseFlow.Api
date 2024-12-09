@@ -1,4 +1,4 @@
-﻿using ExpenseFlow.Communication.Enums.Expenses;
+﻿using ExpenseFlow.Domain.Enums;
 
 namespace ExpenseFlow.Domain.Entities;
 public class Expense

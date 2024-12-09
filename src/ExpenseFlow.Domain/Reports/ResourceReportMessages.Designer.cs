@@ -97,6 +97,24 @@ namespace ExpenseFlow.Domain.Reports {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Expenses.
+        /// </summary>
+        public static string EXPENSES {
+            get {
+                return ResourceManager.GetString("EXPENSES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expenses for.
+        /// </summary>
+        public static string EXPENSES_FOR {
+            get {
+                return ResourceManager.GetString("EXPENSES_FOR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Payment Type.
         /// </summary>
         public static string PAYMENT_TYPE {
@@ -156,6 +174,15 @@ namespace ExpenseFlow.Domain.Reports {
         public static string TITLE {
             get {
                 return ResourceManager.GetString("TITLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total spent in {0}.
+        /// </summary>
+        public static string TOTAL_SPENT_IN {
+            get {
+                return ResourceManager.GetString("TOTAL_SPENT_IN", resourceCulture);
             }
         }
     }
