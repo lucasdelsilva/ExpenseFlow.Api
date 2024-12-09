@@ -10,4 +10,22 @@
 		<ProjectReference Include="..\ExpenseFlow.Communication\ExpenseFlow.Communication.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Compile Update="Reports\ResourceReportMessages.Designer.cs">
+	    <DesignTime>True</DesignTime>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>ResourceReportMessages.resx</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Update="Reports\ResourceReportMessages.pt-BR.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	  </EmbeddedResource>
+	  <EmbeddedResource Update="Reports\ResourceReportMessages.resx">
+	    <Generator>PublicResXFileCodeGenerator</Generator>
+	    <LastGenOutput>ResourceReportMessages.Designer.cs</LastGenOutput>
+	  </EmbeddedResource>
+	</ItemGroup>
+
 </Project>
