@@ -165,18 +165,6 @@ O projeto segue os princípios de arquitetura limpa com clara separação de res
 3. **Camada de Domínio**: Regras de negócio principais e entidades
 4. **Camada de Infraestrutura**: Preocupações externas como acesso ao banco de dados
 
-## 🤝 Como Contribuir
-
-1. Faça um fork do repositório
-2. Crie uma branch para sua feature
-3. Faça commit das suas alterações
-4. Faça push para a branch
-5. Abra um Pull Request
-
-## 📝 Licença
-
-Este projeto está licenciado sob a Licença MIT - veja o arquivo LICENSE para detalhes
-
 <!-- Badges -->
 [badge-dot-net]: https://img.shields.io/badge/.NET-512BD4?logo=dotnet&logoColor=fff&style=for-the-badge
 [badge-windows]: https://img.shields.io/badge/Windows-0078D4?logo=windows&logoColor=fff&style=for-the-badge
