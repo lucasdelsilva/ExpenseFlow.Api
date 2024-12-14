@@ -1,14 +1,14 @@
 ﻿namespace ExpenseFlow.Communication.Response.Errors;
-public class ResponseErrorModel
+public class ResponseErrorJson
 {
     public List<Object> Erros { get; set; } = [];
 
-    public ResponseErrorModel(List<Object> modelErros)
+    public ResponseErrorJson(List<Object> modelErros)
     {
         Erros = modelErros;
     }
 
-    public ResponseErrorModel(string modelErro)
+    public ResponseErrorJson(string modelErro)
     {
         Erros = [modelErro];
     }

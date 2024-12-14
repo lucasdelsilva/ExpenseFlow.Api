@@ -13,7 +13,7 @@ public class ExpensesController : ControllerBase
 {
     [HttpPost]
     [ProducesResponseType(typeof(ResponseExpenseCreateJson), StatusCodes.Status201Created)]
-    [ProducesResponseType(typeof(ResponseErrorModel), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Created([FromServices] IExpenseCreateUseCase useCase, [FromBody] RequestExpenseCreateOrUpdateJson request)
     {
         var response = await useCase.Create(request);
@@ -22,7 +22,7 @@ public class ExpensesController : ControllerBase
 
     [HttpGet]
     [ProducesResponseType(typeof(ResponseExpensesJson), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ResponseErrorModel), StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status204NoContent)]
     public async Task<IActionResult> GetAll([FromServices] IExpenseGetAllUseCase useCase)
     {
         var response = await useCase.GetAll();
@@ -35,7 +35,7 @@ public class ExpensesController : ControllerBase
     [HttpGet]
     [Route("{id}")]
     [ProducesResponseType(typeof(ResponseExpenseJson), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ResponseErrorModel), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById([FromServices] IExpenseGetByIdUseCase useCase, [FromRoute] long id)
     {
         var response = await useCase.GetById(id);
@@ -48,7 +48,7 @@ public class ExpensesController : ControllerBase
     [HttpDelete]
     [Route("{id}")]
     [ProducesResponseType(typeof(ResponseExpenseJson), StatusCodes.Status204NoContent)]
-    [ProducesResponseType(typeof(ResponseErrorModel), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> DeleteById([FromServices] IExpenseDeleteUseCase useCase, [FromRoute] long id)
     {
         await useCase.Delete(id);
@@ -58,8 +58,8 @@ public class ExpensesController : ControllerBase
     [HttpPut]
     [Route("{id}")]
     [ProducesResponseType(typeof(ResponseExpenseJson), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ResponseErrorModel), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(ResponseErrorModel), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Update([FromServices] IExpenseUpdateUseCase useCase, [FromRoute] long id, [FromBody] RequestExpenseCreateOrUpdateJson request)
     {
         await useCase.Update(id, request);

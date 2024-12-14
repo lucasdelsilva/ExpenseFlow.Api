@@ -22,12 +22,12 @@ internal class ExpensesRepository : IExpensesWriteOnlyRepository, IExpensesReadO
         return await _dbContext.Expenses.AsNoTracking().ToListAsync();
     }
 
-    public async Task<Expense> GetById(long id)
+    public async Task<Expense?> GetById(long id)
     {
         return await _dbContext.Expenses.AsNoTracking().FirstOrDefaultAsync(expense => expense.Id.Equals(id));
     }
 
-    public async Task<Expense> UpdateOrRemoveGetById(long id)
+    public async Task<Expense?> UpdateOrRemoveGetById(long id)
     {
         return await _dbContext.Expenses.FirstOrDefaultAsync(expense => expense.Id.Equals(id));
     }
