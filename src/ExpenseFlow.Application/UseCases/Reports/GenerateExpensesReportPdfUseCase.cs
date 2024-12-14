@@ -143,7 +143,7 @@ public class GenerateExpensesReportPdfUseCase : IGenerateExpensesReportPdfUseCas
         document.Info.Author = "Lucas";
 
         var styleSheet = document.Styles["Normal"];
-        styleSheet.Font.Name = FontHelper.RALEWAY_REGULAR;
+        styleSheet!.Font.Name = FontHelper.RALEWAY_REGULAR;
 
         return document;
     }
@@ -174,7 +174,7 @@ public class GenerateExpensesReportPdfUseCase : IGenerateExpensesReportPdfUseCas
         var assembly = Assembly.GetExecutingAssembly();
         var directoryName = Path.GetDirectoryName(assembly.Location);
 
-        var pathImage = Path.Combine(directoryName, "UseCases\\Reports\\Logo", "Logo.png");
+        var pathImage = Path.Combine(directoryName!, "UseCases\\Reports\\Logo", "Logo.png");
         row.Cells[0].AddImage(pathImage);
 
         row.Cells[1].AddParagraph("Hey, Lucas!");

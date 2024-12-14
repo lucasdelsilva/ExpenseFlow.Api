@@ -31,7 +31,7 @@ public class ExpenseCreatedValidatorTests
         //Arange
         var validator = new ExpenseValidator();
         var request = RequestExpensesCreatedModelBuilder.Request();
-        request.Title = title;
+        request.Title = title!;
 
         //Act
         var result = validator.Validate(request);

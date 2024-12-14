@@ -2,6 +2,7 @@ using ExpenseFlow.Api.Filters;
 using ExpenseFlow.Api.Middleware;
 using ExpenseFlow.Application;
 using ExpenseFlow.Infrastructure;
+using ExpenseFlow.Infrastructure.Migrations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,4 +33,11 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+await MigrateDatabase();
 app.Run();
+
+async Task MigrateDatabase()
+{
+    await using var scope = app.Services.CreateAsyncScope();
+    await DataBaseMigration.MigrateDataBase(scope.ServiceProvider);
+}

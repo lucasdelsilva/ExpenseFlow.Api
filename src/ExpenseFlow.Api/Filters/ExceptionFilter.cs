@@ -19,7 +19,7 @@ public class ExceptionFilter : IExceptionFilter
     private static void HandleProjectExeption(ExceptionContext context)
     {
         var exceptionExpense = (ExpenseFlowException)context.Exception;
-        var errorResponse = new ResponseErrorModel(exceptionExpense!.GetErros());
+        var errorResponse = new ResponseErrorJson(exceptionExpense!.GetErros());
 
         context.HttpContext.Response.StatusCode = exceptionExpense.StatusCode;
         context.Result = new ObjectResult(errorResponse);
@@ -27,7 +27,7 @@ public class ExceptionFilter : IExceptionFilter
 
     private static void ThrowUnknownError(ExceptionContext context)
     {
-        var message = new ResponseErrorModel(ResourceErrorMessages.UNKNOWN_ERROR);
+        var message = new ResponseErrorJson(ResourceErrorMessages.UNKNOWN_ERROR);
 
         context.HttpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;
         context.Result = new ObjectResult(message);

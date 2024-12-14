@@ -7,7 +7,7 @@ public class ExpensesReportFontResolver : IFontResolver
     public byte[] GetFont(string faceName)
     {
         var stream = ReadFontFile(faceName) ?? ReadFontFile(FontHelper.DEFAULT_FONT);
-        var length = (int)stream.Length;
+        var length = (int)stream!.Length;
         var data = new byte[length];
 
         stream.Read(buffer: data, offset: 0, count: length);
@@ -19,7 +19,7 @@ public class ExpensesReportFontResolver : IFontResolver
         return new FontResolverInfo(familyName);
     }
 
-    private Stream ReadFontFile(string faceName)
+    private Stream? ReadFontFile(string faceName)
     {
         var assembly = Assembly.GetExecutingAssembly();
         return assembly.GetManifestResourceStream($"ExpenseFlow.Application.UseCases.Reports.Fonts.{faceName}.ttf");
