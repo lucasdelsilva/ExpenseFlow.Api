@@ -164,6 +164,7 @@ O projeto segue os princípios de arquitetura limpa com clara separação de res
 2. **Camada de Aplicação**: Contém lógica de negócio e casos de uso
 3. **Camada de Domínio**: Regras de negócio principais e entidades
 4. **Camada de Infraestrutura**: Preocupações externas como acesso ao banco de dados
+5. **Camada de Exception**: Tratamento de erros (Exceptions)
 
 <!-- Badges -->
 [badge-dot-net]: https://img.shields.io/badge/.NET-512BD4?logo=dotnet&logoColor=fff&style=for-the-badge
