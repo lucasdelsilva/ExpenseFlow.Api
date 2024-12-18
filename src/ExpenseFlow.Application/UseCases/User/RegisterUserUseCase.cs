@@ -6,6 +6,7 @@ using ExpenseFlow.Communication.Response;
 using ExpenseFlow.Domain.Repositories.Interfaces;
 using ExpenseFlow.Domain.Repositories.User;
 using ExpenseFlow.Domain.Security.Cryptography;
+using ExpenseFlow.Domain.Security.Tokens;
 using ExpenseFlow.Exception;
 using ExpenseFlow.Exception.ExceptionBase;
 using FluentValidation.Results;
@@ -18,14 +19,17 @@ public class RegisterUserUseCase : IRegisterUserUseCase
     private readonly IUserReadOnlyRepository _userReadOnlyRepository;
     private readonly IUserWriteOnlyRepository _userWriteOnlyRepository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IAccessTokenGenerator _accessTokenGenerator;
     public RegisterUserUseCase(IMapper mapper, IPasswordEncripter passwordEncripter,
-        IUserReadOnlyRepository userReadOnlyRepository, IUserWriteOnlyRepository userWriteOnlyRepository, IUnitOfWork unitOfWork)
+        IUserReadOnlyRepository userReadOnlyRepository, IUserWriteOnlyRepository userWriteOnlyRepository,
+        IUnitOfWork unitOfWork, IAccessTokenGenerator accessTokenGenerator)
     {
         _mapper = mapper;
         _passwordEncripter = passwordEncripter;
         _userReadOnlyRepository = userReadOnlyRepository;
         _userWriteOnlyRepository = userWriteOnlyRepository;
         _unitOfWork = unitOfWork;
+        _accessTokenGenerator = accessTokenGenerator;
     }
 
     public async Task<ResponseRegisterUserJson> Register(RequestRegisterUserJson request)
@@ -40,7 +44,8 @@ public class RegisterUserUseCase : IRegisterUserUseCase
 
         return new ResponseRegisterUserJson
         {
-            Name = user.Name
+            Name = user.Name,
+            Token = _accessTokenGenerator.GeneratorToken(user)
         };
     }
 
