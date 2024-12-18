@@ -3,12 +3,14 @@ using ExpenseFlow.Communication.Request;
 using ExpenseFlow.Communication.Response;
 using ExpenseFlow.Communication.Response.Errors;
 using ExpenseFlow.Exception;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExpenseFlow.Api.Controllers;
 
 [Route("api/expenses")]
 [ApiController]
+[Authorize]
 public class ExpensesController : ControllerBase
 {
     [HttpPost]

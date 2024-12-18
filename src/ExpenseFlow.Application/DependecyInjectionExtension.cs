@@ -5,6 +5,7 @@ using ExpenseFlow.Application.UseCases.Reports;
 using ExpenseFlow.Application.UseCases.Reports.Interfaces;
 using ExpenseFlow.Application.UseCases.User;
 using ExpenseFlow.Application.UseCases.User.Interface;
+using ExpenseFlow.Application.UseCases.User.Validator;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ExpenseFlow.Application;
@@ -23,8 +24,9 @@ public static class DependecyInjectionExtension
 
     public static void AddUseCases(IServiceCollection serviceDescriptors)
     {
-        //
+        //User
         serviceDescriptors.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>();
+        serviceDescriptors.AddScoped<ILoginUserUseCase, LoginUserUseCase>();
 
         //Expenses
         serviceDescriptors.AddScoped<IExpenseCreateUseCase, ExpenseCreatedUseCase>();

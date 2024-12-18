@@ -2,8 +2,10 @@
 using ExpenseFlow.Domain.Repositories.Interfaces;
 using ExpenseFlow.Domain.Repositories.User;
 using ExpenseFlow.Domain.Security.Cryptography;
+using ExpenseFlow.Domain.Security.Tokens;
 using ExpenseFlow.Infrastructure.DataAccess;
 using ExpenseFlow.Infrastructure.Repositories;
+using ExpenseFlow.Infrastructure.Security.Tokens;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,6 +17,8 @@ public static class DependecyInjectionExtension
     {
         AddRepositories(services);
         AddDbContext(services, configuration);
+        AddToken(services, configuration);
+
         services.AddScoped<IPasswordEncripter, Security.BCrypt>();
     }
 
@@ -26,6 +30,16 @@ public static class DependecyInjectionExtension
         //User
         serviceDescriptors.AddScoped<IUserReadOnlyRepository, UserRepository>();
         serviceDescriptors.AddScoped<IUserWriteOnlyRepository, UserRepository>();
+    }
+
+    private static void AddToken(IServiceCollection serviceDescriptors, IConfiguration configuration)
+    {
+        var expirationMinutes = configuration.GetValue<uint>("Settings:Jwt:ExpiresMinutes");
+        var signinKey = configuration.GetValue<string>("Settings:Jwt:SigningKey");
+
+
+        //JWT
+        serviceDescriptors.AddScoped<IAccessTokenGenerator>(config => new JwtTokenGenerator(expirationMinutes, signinKey!));
     }
 
     private static void AddDbContext(IServiceCollection serviceDescriptors, IConfiguration configuration)
