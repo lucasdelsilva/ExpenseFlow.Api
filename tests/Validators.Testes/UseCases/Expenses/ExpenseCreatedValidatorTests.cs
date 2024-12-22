@@ -12,7 +12,7 @@ public class ExpenseCreatedValidatorTests
     {
         //Arange
         var validator = new ExpenseValidator();
-        var request = RequestExpensesCreatedModelBuilder.Request();
+        var request = RequestExpenseCreateOrUpdateJsonBuilder.Request();
 
         //Act
         var result = validator.Validate(request);
@@ -30,7 +30,7 @@ public class ExpenseCreatedValidatorTests
     {
         //Arange
         var validator = new ExpenseValidator();
-        var request = RequestExpensesCreatedModelBuilder.Request();
+        var request = RequestExpenseCreateOrUpdateJsonBuilder.Request();
         request.Title = title!;
 
         //Act
@@ -48,7 +48,7 @@ public class ExpenseCreatedValidatorTests
     {
         //Arange
         var validator = new ExpenseValidator();
-        var request = RequestExpensesCreatedModelBuilder.Request();
+        var request = RequestExpenseCreateOrUpdateJsonBuilder.Request();
         request.Date = DateTime.UtcNow.AddDays(1);
 
         //Act
@@ -66,7 +66,7 @@ public class ExpenseCreatedValidatorTests
     {
         //Arange
         var validator = new ExpenseValidator();
-        var request = RequestExpensesCreatedModelBuilder.Request();
+        var request = RequestExpenseCreateOrUpdateJsonBuilder.Request();
         request.PaymentType = (PaymentType)900;
 
         //Act
@@ -86,7 +86,7 @@ public class ExpenseCreatedValidatorTests
     {
         //Arange
         var validator = new ExpenseValidator();
-        var request = RequestExpensesCreatedModelBuilder.Request();
+        var request = RequestExpenseCreateOrUpdateJsonBuilder.Request();
         request.Amount = amount;
 
         //Act
