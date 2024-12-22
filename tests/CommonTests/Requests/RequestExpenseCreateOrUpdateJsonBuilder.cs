@@ -3,7 +3,7 @@ using ExpenseFlow.Communication.Enums.Expenses;
 using ExpenseFlow.Communication.Request;
 
 namespace CommonTests.Requests;
-public class RequestExpensesCreatedModelBuilder
+public class RequestExpenseCreateOrUpdateJsonBuilder
 {
     public static RequestExpenseCreateOrUpdateJson Request()
     {

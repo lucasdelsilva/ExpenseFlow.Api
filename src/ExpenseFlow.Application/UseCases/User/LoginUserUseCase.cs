@@ -7,7 +7,7 @@ using ExpenseFlow.Domain.Security.Tokens;
 using ExpenseFlow.Exception;
 using ExpenseFlow.Exception.ExceptionBase;
 
-namespace ExpenseFlow.Application.UseCases.User.Validator;
+namespace ExpenseFlow.Application.UseCases.User;
 public class LoginUserUseCase : ILoginUserUseCase
 {
     private readonly IUserReadOnlyRepository _userReadOnlyRepository;

@@ -5,7 +5,6 @@ using ExpenseFlow.Application.UseCases.Reports;
 using ExpenseFlow.Application.UseCases.Reports.Interfaces;
 using ExpenseFlow.Application.UseCases.User;
 using ExpenseFlow.Application.UseCases.User.Interface;
-using ExpenseFlow.Application.UseCases.User.Validator;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ExpenseFlow.Application;
