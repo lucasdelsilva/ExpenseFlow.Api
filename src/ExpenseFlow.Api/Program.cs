@@ -2,8 +2,11 @@ using ExpenseFlow.Api.Filters;
 using ExpenseFlow.Api.Middleware;
 using ExpenseFlow.Application;
 using ExpenseFlow.Infrastructure;
+using ExpenseFlow.Infrastructure.DataAccess;
+using ExpenseFlow.Infrastructure.Extensions;
 using ExpenseFlow.Infrastructure.Migrations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -68,6 +71,15 @@ builder.Services.AddAuthentication(config =>
     };
 });
 
+builder.Services.AddHealthChecks()
+            .AddCheck("self", () => HealthCheckResult.Healthy(), tags: new[] { "self" })
+            .AddDbContextCheck<ApplicationDbContext>(
+                name: "database",
+                tags: new[] { "database" },
+                customTestQuery: async (context, token) =>
+                    await context.Database.CanConnectAsync(token));
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -85,7 +97,9 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-await MigrateDatabase();
+if (!builder.Configuration.IsTestEnvironment())
+    await MigrateDatabase();
+
 app.Run();
 
 async Task MigrateDatabase()
@@ -93,3 +107,5 @@ async Task MigrateDatabase()
     await using var scope = app.Services.CreateAsyncScope();
     await DataBaseMigration.MigrateDataBase(scope.ServiceProvider);
 }
+
+public partial class Program { }
