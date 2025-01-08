@@ -1,9 +1,12 @@
 ﻿using CommonTests.Requests;
 using ExpenseFlow.Exception;
 using FluentAssertions;
+using System.Globalization;
 using System.Net;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
+using WebApi.Test.InlineData;
 
 namespace WebApi.Test.Users;
 public class RegisterUserTest(CustomWebApplicationFactory webApplicationFactory) : IClassFixture<CustomWebApplicationFactory>
@@ -26,11 +29,14 @@ public class RegisterUserTest(CustomWebApplicationFactory webApplicationFactory)
         response.RootElement.GetProperty("token").GetString().Should().NotBeNullOrEmpty();
     }
 
-    [Fact]
-    public async Task Error_Empty_Name()
+    [Theory]
+    [ClassData(typeof(CultureInlinaData))]
+    public async Task Error_Empty_Name(string language)
     {
         var request = RequestRegisterUserJsonBuilder.Build();
         request.Name = string.Empty;
+
+        _httpClient.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(language));
         var result = await _httpClient.PostAsJsonAsync(METHOD, request);
 
         result.StatusCode.Should().Be(HttpStatusCode.BadRequest);
@@ -41,15 +47,20 @@ public class RegisterUserTest(CustomWebApplicationFactory webApplicationFactory)
         var resultErros = response.RootElement.GetProperty("erros").EnumerateArray();
         var firstErros = resultErros.FirstOrDefault();
 
-        firstErros.GetProperty("message").GetString().Should().Be(ResourceErrorMessages.NAME_EMPTY);
+        var expectedMessage = ResourceErrorMessages.ResourceManager.GetString("NAME_EMPTY", new CultureInfo(language));
+
+        firstErros.GetProperty("message").GetString().Should().Be(expectedMessage);
         firstErros.GetProperty("propertyName").GetString().Should().Be("Name");
     }
 
-    [Fact]
-    public async Task Error_Empty_Email()
+    [Theory]
+    [ClassData(typeof(CultureInlinaData))]
+    public async Task Error_Empty_Email(string language)
     {
         var request = RequestRegisterUserJsonBuilder.Build();
         request.Email = string.Empty;
+
+        _httpClient.DefaultRequestHeaders.AcceptLanguage.Add(new StringWithQualityHeaderValue(language));
         var result = await _httpClient.PostAsJsonAsync(METHOD, request);
 
         result.StatusCode.Should().Be(HttpStatusCode.BadRequest);
@@ -60,7 +71,9 @@ public class RegisterUserTest(CustomWebApplicationFactory webApplicationFactory)
         var resultErros = response.RootElement.GetProperty("erros").EnumerateArray();
         var firstErros = resultErros.FirstOrDefault();
 
-        firstErros.GetProperty("message").GetString().Should().Be(ResourceErrorMessages.EMAIL_EMPTY);
+        var expectedMessage = ResourceErrorMessages.ResourceManager.GetString("EMAIL_EMPTY", new CultureInfo(language));
+
+        firstErros.GetProperty("message").GetString().Should().Be(expectedMessage);
         firstErros.GetProperty("propertyName").GetString().Should().Be("Email");
     }
 }
