@@ -4,6 +4,7 @@ using ExpenseFlow.Application.UseCases.Reports.Interfaces;
 using ExpenseFlow.Domain.Extensions;
 using ExpenseFlow.Domain.Reports;
 using ExpenseFlow.Domain.Repositories.Expenses;
+using ExpenseFlow.Domain.Services.LoggedUser;
 using MigraDoc.DocumentObjectModel;
 using MigraDoc.DocumentObjectModel.Tables;
 using MigraDoc.Rendering;
@@ -15,22 +16,26 @@ public class GenerateExpensesReportPdfUseCase : IGenerateExpensesReportPdfUseCas
 {
     private const int HEIGHT_ROW_EXPENSES_TABLE = 25;
     private readonly IExpensesReadOnlyRepository _repository;
-    public GenerateExpensesReportPdfUseCase(IExpensesReadOnlyRepository repository)
+    private readonly ILoggedUser _loggedUser;
+
+    public GenerateExpensesReportPdfUseCase(IExpensesReadOnlyRepository repository, ILoggedUser loggedUser)
     {
         _repository = repository;
         GlobalFontSettings.FontResolver = new ExpensesReportFontResolver();
+        _loggedUser = loggedUser;
     }
 
     public async Task<byte[]> GeneratePdfFile(DateOnly date)
     {
-        var expenses = await _repository.FilterByMonth(date);
+        var loggedUser = await _loggedUser.Get();
+        var expenses = await _repository.FilterByMonth(loggedUser, date);
         if (expenses.Count.Equals(0))
             return [];
 
-        var document = CreateDocument(date);
+        var document = CreateDocument(loggedUser.Name, date);
         var page = CreateSection(document);
 
-        CreateHeaderPhotoAndName(page);
+        CreateHeaderPhotoAndName(loggedUser.Name, page);
         CreateSectionTotalExpense(page, date, expenses.Sum(expense => expense.Amount));
 
         foreach (var expense in expenses)
@@ -118,7 +123,7 @@ public class GenerateExpensesReportPdfUseCase : IGenerateExpensesReportPdfUseCas
 
     private void AddAmountForExpense(Cell cell, decimal amount)
     {
-        cell.AddParagraph($"-{amount} {ResourceReportMessages.CURRENCY_SYMBOL}");
+        cell.AddParagraph($"-{amount:f2} {ResourceReportMessages.CURRENCY_SYMBOL}");
         cell.Format.Font = new Font { Name = FontHelper.WORKSANS_REGULAR, Size = 14, Color = ColorsHelper.BLACK };
         cell.Shading.Color = ColorsHelper.WHITE;
         cell.VerticalAlignment = VerticalAlignment.Center;
@@ -135,12 +140,12 @@ public class GenerateExpensesReportPdfUseCase : IGenerateExpensesReportPdfUseCas
         return table;
     }
 
-    private Document CreateDocument(DateOnly date)
+    private Document CreateDocument(string author, DateOnly date)
     {
         var document = new Document();
 
         document.Info.Title = $"{ResourceReportMessages.EXPENSES_FOR} {date:Y}";
-        document.Info.Author = "Lucas";
+        document.Info.Author = author;
 
         var styleSheet = document.Styles["Normal"];
         styleSheet!.Font.Name = FontHelper.RALEWAY_REGULAR;
@@ -163,7 +168,7 @@ public class GenerateExpensesReportPdfUseCase : IGenerateExpensesReportPdfUseCas
         return section;
     }
 
-    private void CreateHeaderPhotoAndName(Section page)
+    private void CreateHeaderPhotoAndName(string author, Section page)
     {
         var table = page.AddTable();
         table.AddColumn();
@@ -177,7 +182,7 @@ public class GenerateExpensesReportPdfUseCase : IGenerateExpensesReportPdfUseCas
         var pathImage = Path.Combine(directoryName!, "UseCases\\Reports\\Logo", "Logo.png");
         row.Cells[0].AddImage(pathImage);
 
-        row.Cells[1].AddParagraph("Hey, Lucas!");
+        row.Cells[1].AddParagraph($"Hey, {author}!");
         row.Cells[1].Format.Font = new Font { Name = FontHelper.RALEWAY_BLACK, Size = 16 };
         row.Cells[1].VerticalAlignment = MigraDoc.DocumentObjectModel.Tables.VerticalAlignment.Center;
     }
@@ -193,7 +198,7 @@ public class GenerateExpensesReportPdfUseCase : IGenerateExpensesReportPdfUseCas
         paragraph.AddFormattedText(title, new Font { Name = FontHelper.RALEWAY_REGULAR, Size = 15 });
         paragraph.AddLineBreak();
 
-        paragraph.AddFormattedText($"{totalExpenses} {ResourceReportMessages.CURRENCY_SYMBOL}", new Font { Name = FontHelper.WORKSANS_BLACK, Size = 50 });
+        paragraph.AddFormattedText($"{totalExpenses:f2} {ResourceReportMessages.CURRENCY_SYMBOL}", new Font { Name = FontHelper.WORKSANS_BLACK, Size = 50 });
     }
 
     private byte[] RenderDocument(Document document)

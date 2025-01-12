@@ -9,8 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 namespace WebApi.Test;
 public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 {
-    private ExpenseFlow.Domain.Entities.User _user;
-    private string _password;
+    private ExpenseFlow.Domain.Entities.User? _user;
+    private string? _password;
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder.UseEnvironment("Test")
@@ -31,9 +31,9 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
             });
     }
 
-    public string GetEmail() => _user.Email;
-    public string GetName() => _user.Name;
-    public string GetPassword() => _password;
+    public string GetEmail() => _user!.Email;
+    public string GetName() => _user!.Name;
+    public string GetPassword() => _password!;
 
     private void StartDataBase(ApplicationDbContext dbContext, IPasswordEncripter passwordEncripter)
     {

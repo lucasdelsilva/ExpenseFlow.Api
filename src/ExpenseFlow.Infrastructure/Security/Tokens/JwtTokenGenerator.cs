@@ -20,6 +20,7 @@ public class JwtTokenGenerator : IAccessTokenGenerator
     {
         var claims = new List<Claim>()
         {
+            new Claim(ClaimTypes.Email, user.Email),
             new Claim(ClaimTypes.Sid, user.UserId.ToString()),
             new Claim(ClaimTypes.Role, user.Role)
         };

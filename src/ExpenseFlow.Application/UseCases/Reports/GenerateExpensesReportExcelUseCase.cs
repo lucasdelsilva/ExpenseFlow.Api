@@ -3,21 +3,28 @@ using ExpenseFlow.Application.UseCases.Reports.Interfaces;
 using ExpenseFlow.Domain.Extensions;
 using ExpenseFlow.Domain.Reports;
 using ExpenseFlow.Domain.Repositories.Expenses;
+using ExpenseFlow.Domain.Services.LoggedUser;
 
 namespace ExpenseFlow.Application.UseCases.Reports;
 public class GenerateExpensesReportExcelUseCase : IGenerateExpensesReportExcelUseCase
 {
     //private const string CURRENCY_SYMBOL = ResourceReportMessages.CURRENCY_SYMBOL;
     private readonly IExpensesReadOnlyRepository _repository;
-    public GenerateExpensesReportExcelUseCase(IExpensesReadOnlyRepository repository) => _repository = repository;
+    private readonly ILoggedUser _loggedUser;
+    public GenerateExpensesReportExcelUseCase(IExpensesReadOnlyRepository repository, ILoggedUser loggedUser)
+    {
+        _repository = repository;
+        _loggedUser = loggedUser;
+    }
 
     public async Task<byte[]> GenerateExcelFile(DateOnly date)
     {
-        var expenses = await _repository.FilterByMonth(date);
+        var loggedUser = await _loggedUser.Get();
+        var expenses = await _repository.FilterByMonth(loggedUser, date);
         if (expenses.Count.Equals(0))
             return [];
 
-        using var workbook = new XLWorkbook { Author = "Lucas", };
+        using var workbook = new XLWorkbook { Author = loggedUser.Name, };
         workbook.Style.Font.FontSize = 12;
         workbook.Style.Font.FontName = "Calibri";
 

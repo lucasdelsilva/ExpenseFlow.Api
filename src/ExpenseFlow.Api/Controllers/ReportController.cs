@@ -1,11 +1,14 @@
 ﻿using ExpenseFlow.Application.UseCases.Reports.Interfaces;
+using ExpenseFlow.Domain.Enums;
 using ExpenseFlow.Domain.Reports;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Mime;
 
 namespace ExpenseFlow.Api.Controllers;
 [Route("api/report")]
 [ApiController]
+[Authorize(Roles = Roles.ADMIN)]
 public class ReportController : ControllerBase
 {
     [HttpGet("excel")]
