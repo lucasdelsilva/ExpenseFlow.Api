@@ -3,10 +3,12 @@ using ExpenseFlow.Domain.Repositories.Interfaces;
 using ExpenseFlow.Domain.Repositories.User;
 using ExpenseFlow.Domain.Security.Cryptography;
 using ExpenseFlow.Domain.Security.Tokens;
+using ExpenseFlow.Domain.Services.LoggedUser;
 using ExpenseFlow.Infrastructure.DataAccess;
 using ExpenseFlow.Infrastructure.Extensions;
 using ExpenseFlow.Infrastructure.Repositories;
 using ExpenseFlow.Infrastructure.Security.Tokens;
+using ExpenseFlow.Infrastructure.Services.LoggedUser;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +19,7 @@ public static class DependecyInjectionExtension
     public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddScoped<IPasswordEncripter, Security.BCrypt>();
+        services.AddScoped<ILoggedUser, LoggedUser>();
 
         AddRepositories(services);
         AddToken(services, configuration);
