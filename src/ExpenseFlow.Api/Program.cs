@@ -1,6 +1,8 @@
 using ExpenseFlow.Api.Filters;
 using ExpenseFlow.Api.Middleware;
+using ExpenseFlow.Api.Token;
 using ExpenseFlow.Application;
+using ExpenseFlow.Domain.Security.Tokens;
 using ExpenseFlow.Infrastructure;
 using ExpenseFlow.Infrastructure.DataAccess;
 using ExpenseFlow.Infrastructure.Extensions;
@@ -16,6 +18,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add dependency Interfaces.
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
+
+builder.Services.AddScoped<ITokenProvider, HttpContextTokenValue>();
+builder.Services.AddHttpContextAccessor();
 
 // Add services to the container.
 builder.Services.AddControllers();

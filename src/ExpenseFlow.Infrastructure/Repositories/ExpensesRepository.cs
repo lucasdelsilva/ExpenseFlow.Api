@@ -17,29 +17,25 @@ internal class ExpensesRepository : IExpensesWriteOnlyRepository, IExpensesReadO
         await _dbContext.Expenses.AddAsync(expense);
     }
 
-    public async Task<List<Expense>> GetAll()
+    public async Task<List<Expense>> GetAll(User user)
     {
-        return await _dbContext.Expenses.AsNoTracking().ToListAsync();
+        return await _dbContext.Expenses.AsNoTracking().Where(expense => expense.UserId.Equals(user.Id)).ToListAsync();
     }
 
-    public async Task<Expense?> GetById(long id)
+    public async Task<Expense?> GetById(User user, long id)
     {
-        return await _dbContext.Expenses.AsNoTracking().FirstOrDefaultAsync(expense => expense.Id.Equals(id));
+        return await _dbContext.Expenses.FirstOrDefaultAsync(expense => expense.Id.Equals(id) && expense.UserId.Equals(user.Id));
     }
 
-    public async Task<Expense?> UpdateOrRemoveGetById(long id)
+    public async Task<Expense?> UpdateOrRemoveGetById(User user, long id)
     {
-        return await _dbContext.Expenses.FirstOrDefaultAsync(expense => expense.Id.Equals(id));
+        return await _dbContext.Expenses.FirstOrDefaultAsync(expense => expense.Id.Equals(id) && expense.UserId.Equals(user.Id));
     }
 
-    public async Task<bool> Delete(long id)
+    public async Task Delete(long id)
     {
-        var expense = await UpdateOrRemoveGetById(id);
-        if (expense is null)
-            return false;
-
-        _dbContext.Expenses.Remove(expense);
-        return true;
+        var expense = await _dbContext.Expenses.FindAsync(id);
+        _dbContext.Expenses.Remove(expense!);
     }
 
     public void Update(Expense request)

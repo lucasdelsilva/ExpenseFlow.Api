@@ -6,6 +6,7 @@ using ExpenseFlow.Communication.Response;
 using ExpenseFlow.Domain.Entities;
 using ExpenseFlow.Domain.Repositories.Expenses;
 using ExpenseFlow.Domain.Repositories.Interfaces;
+using ExpenseFlow.Domain.Services.LoggedUser;
 using ExpenseFlow.Exception.ExceptionBase;
 
 namespace ExpenseFlow.Application.UseCases.Expenses;
@@ -14,18 +15,22 @@ public class ExpenseCreatedUseCase : IExpenseCreateUseCase
     private readonly IExpensesWriteOnlyRepository _expensesRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
-    public ExpenseCreatedUseCase(IExpensesWriteOnlyRepository expensesRepository, IUnitOfWork unitOfWork, IMapper mapper)
+    private readonly ILoggedUser _loggedUser;
+    public ExpenseCreatedUseCase(IExpensesWriteOnlyRepository expensesRepository, IUnitOfWork unitOfWork, IMapper mapper, ILoggedUser loggedUser)
     {
         _expensesRepository = expensesRepository;
         _unitOfWork = unitOfWork;
         _mapper = mapper;
+        _loggedUser = loggedUser;
     }
 
     public async Task<ResponseExpenseCreateJson> Create(RequestExpenseCreateOrUpdateJson request)
     {
         Validate(request);
 
+        var loggedUser = await _loggedUser.Get();
         var expense = _mapper.Map<Expense>(request);
+        expense.UserId = loggedUser.Id;
 
         await _expensesRepository.Create(expense);
         await _unitOfWork.Commit();
