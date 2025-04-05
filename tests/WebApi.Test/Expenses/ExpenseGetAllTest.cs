@@ -10,7 +10,7 @@ public class ExpenseGetAllTest : ExpenseFlowClassFixture
 
     public ExpenseGetAllTest(CustomWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
     {
-        _token = webApplicationFactory.GetToken();
+        _token = webApplicationFactory.User_Team_Member.GetToken();
     }
 
     [Fact]

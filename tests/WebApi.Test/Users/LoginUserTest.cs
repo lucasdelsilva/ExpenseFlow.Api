@@ -17,9 +17,9 @@ public class LoginUserTest : ExpenseFlowClassFixture
 
     public LoginUserTest(CustomWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)
     {
-        _email = webApplicationFactory.GetEmail();
-        _name = webApplicationFactory.GetName();
-        _password = webApplicationFactory.GetPassword();
+        _email = webApplicationFactory.User_Team_Member.GetEmail();
+        _name = webApplicationFactory.User_Team_Member.GetName();
+        _password = webApplicationFactory.User_Team_Member.GetPassword();
     }
 
     [Fact]
@@ -47,7 +47,7 @@ public class LoginUserTest : ExpenseFlowClassFixture
     {
         var request = RequestLoginUserJsonBuilder.Build();
 
-        var result = await DoPost(requestUri: METHOD, request: request,culture: culture);
+        var result = await DoPost(requestUri: METHOD, request: request, culture: culture);
         result.StatusCode.Should().Be(HttpStatusCode.Unauthorized);
 
         var body = await result.Content.ReadAsStreamAsync();
