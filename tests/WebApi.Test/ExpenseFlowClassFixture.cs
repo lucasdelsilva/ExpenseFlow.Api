@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Headers;
+﻿using ExpenseFlow.Communication.Request;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 
 namespace WebApi.Test;
@@ -32,6 +33,14 @@ public class ExpenseFlowClassFixture : IClassFixture<CustomWebApplicationFactory
         CultureRequest(culture);
 
         return await _httpClient.GetAsync(requestUri);
+    }
+
+    protected async Task<HttpResponseMessage> DoPut(string requestUri, RequestExpenseCreateOrUpdateJson request, string token, string culture = "en")
+    {
+        AuthorizeRequest(token);
+        CultureRequest(culture);
+
+        return await _httpClient.PutAsJsonAsync(requestUri, request);
     }
 
     private void AuthorizeRequest(string token)
