@@ -11,7 +11,9 @@ using Microsoft.Extensions.DependencyInjection;
 namespace WebApi.Test;
 public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 {
-    private ExpenseFlow.Domain.Entities.User? _user;
+    private Expense? _expense;
+    private User? _user;
+
     private string? _password;
     private string? _token;
     protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -41,11 +43,12 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
     public string GetName() => _user!.Name;
     public string GetPassword() => _password!;
     public string GetToken() => _token!;
+    public long GetExpenseId() => _expense!.Id;
 
     private void AddExpenses(ApplicationDbContext dbContext, User user)
     {
-        var expense = ExpenseBuilder.Build(user);
-        dbContext.Expenses.Add(expense);
+        _expense = ExpenseBuilder.Build(user);
+        dbContext.Expenses.Add(_expense);
     }
 
     private void StartDataBase(ApplicationDbContext dbContext, IPasswordEncripter passwordEncripter)
