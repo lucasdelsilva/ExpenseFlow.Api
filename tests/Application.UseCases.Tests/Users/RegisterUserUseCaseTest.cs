@@ -9,7 +9,7 @@ using ExpenseFlow.Exception.ExceptionBase;
 using FluentAssertions;
 using System.Text.Json;
 
-namespace Application.UseCases.Tests.Users;
+namespace UseCases.Tests.Users;
 public class RegisterUserUseCaseTest
 {
     [Fact]

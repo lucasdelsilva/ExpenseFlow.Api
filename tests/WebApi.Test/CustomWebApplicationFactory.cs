@@ -1,5 +1,6 @@
 ﻿using CommonTests.Entities;
 using ExpenseFlow.Domain.Security.Cryptography;
+using ExpenseFlow.Domain.Security.Tokens;
 using ExpenseFlow.Infrastructure.DataAccess;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -11,6 +12,7 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 {
     private ExpenseFlow.Domain.Entities.User? _user;
     private string? _password;
+    private string? _token;
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder.UseEnvironment("Test")
@@ -28,12 +30,16 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
                 var passwordEncripter = scope.ServiceProvider.GetRequiredService<IPasswordEncripter>();
 
                 StartDataBase(dbContext, passwordEncripter);
+
+                var tokenGenerater = scope.ServiceProvider.GetRequiredService<IAccessTokenGenerator>();
+                _token = tokenGenerater.GeneratorToken(_user!);
             });
     }
 
     public string GetEmail() => _user!.Email;
     public string GetName() => _user!.Name;
     public string GetPassword() => _password!;
+    public string GetToken() => _token!;
 
     private void StartDataBase(ApplicationDbContext dbContext, IPasswordEncripter passwordEncripter)
     {
