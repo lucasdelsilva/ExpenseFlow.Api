@@ -1,4 +1,5 @@
 ﻿using CommonTests.Entities;
+using ExpenseFlow.Domain.Entities;
 using ExpenseFlow.Domain.Security.Cryptography;
 using ExpenseFlow.Domain.Security.Tokens;
 using ExpenseFlow.Infrastructure.DataAccess;
@@ -41,14 +42,26 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
     public string GetPassword() => _password!;
     public string GetToken() => _token!;
 
+    private void AddExpenses(ApplicationDbContext dbContext, User user)
+    {
+        var expense = ExpenseBuilder.Build(user);
+        dbContext.Expenses.Add(expense);
+    }
+
     private void StartDataBase(ApplicationDbContext dbContext, IPasswordEncripter passwordEncripter)
+    {
+        AddUsers(dbContext, passwordEncripter);
+        AddExpenses(dbContext, _user!);
+
+        dbContext.SaveChanges();
+    }
+
+    private void AddUsers(ApplicationDbContext dbContext, IPasswordEncripter passwordEncripter)
     {
         _user = UserBuilder.Build();
         _password = _user.Password;
 
         _user.Password = passwordEncripter.Encrypt(_user.Password);
-
         dbContext.Users.Add(_user);
-        dbContext.SaveChanges();
     }
 }
