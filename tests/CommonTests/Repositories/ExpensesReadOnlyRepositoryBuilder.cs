@@ -25,5 +25,13 @@ public class ExpensesReadOnlyRepositoryBuilder
         return this;
     }
 
+    public ExpensesReadOnlyRepositoryBuilder UpdateOrRemoveGetById(User user, Expense? expense)
+    {
+        if (expense is not null)
+            _repository.Setup(rep => rep.UpdateOrRemoveGetById(user, expense.Id)).ReturnsAsync(expense);
+
+        return this;
+    }
+
     public IExpensesReadOnlyRepository Build() => _repository.Object;
 }
