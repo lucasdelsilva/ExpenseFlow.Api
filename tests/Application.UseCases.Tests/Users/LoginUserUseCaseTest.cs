@@ -9,7 +9,7 @@ using ExpenseFlow.Exception;
 using ExpenseFlow.Exception.ExceptionBase;
 using FluentAssertions;
 
-namespace Application.UseCases.Tests.Users;
+namespace UseCases.Tests.Users;
 public class LoginUserUseCaseTest
 {
     [Fact]

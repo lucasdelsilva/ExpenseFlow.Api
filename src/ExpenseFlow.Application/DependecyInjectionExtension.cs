@@ -26,6 +26,10 @@ public static class DependecyInjectionExtension
         //User
         serviceDescriptors.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>();
         serviceDescriptors.AddScoped<ILoginUserUseCase, LoginUserUseCase>();
+        serviceDescriptors.AddScoped<IGetProfileUserUseCase, GetProfileUserUseCase>();
+        serviceDescriptors.AddScoped<IUpdateProfileUserUseCase, UpdateProfileUserUseCase>();
+        serviceDescriptors.AddScoped<IChangePasswordUserUseCase, ChangePasswordUserUseCase>();
+        serviceDescriptors.AddScoped<IDeleteProfileUserUseCase, DeleteProfileUserUseCase>();
 
         //Expenses
         serviceDescriptors.AddScoped<IExpenseCreateUseCase, ExpenseCreatedUseCase>();

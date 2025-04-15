@@ -142,6 +142,15 @@ namespace ExpenseFlow.Exception {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The password you entered is different from the current password..
+        /// </summary>
+        public static string OLDPASSWORD_DIFFERENT_CURRENT_NEWPASSWORD {
+            get {
+                return ResourceManager.GetString("OLDPASSWORD_DIFFERENT_CURRENT_NEWPASSWORD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The Password is not equals..
         /// </summary>
         public static string PASSWORD_EQUAL {

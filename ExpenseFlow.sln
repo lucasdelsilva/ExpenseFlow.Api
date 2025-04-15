@@ -23,7 +23,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Validators.Tests", "tests\V
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonTests", "tests\CommonTests\CommonTests.csproj", "{EB034FF8-61D4-4C72-8AC0-DAD9656D8A7D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.UseCases.Tests", "tests\Application.UseCases.Tests\Application.UseCases.Tests.csproj", "{9E1D302C-EB92-4CFA-B8EE-29666D1B5998}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UseCases.Tests", "tests\Application.UseCases.Tests\UseCases.Tests.csproj", "{9E1D302C-EB92-4CFA-B8EE-29666D1B5998}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.Test", "tests\WebApi.Test\WebApi.Test.csproj", "{76618E9A-D714-44FA-B89D-94917950E22A}"
 EndProject

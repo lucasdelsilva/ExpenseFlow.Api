@@ -144,6 +144,9 @@
   <data name="NAME_EMPTY" xml:space="preserve">
     <value>Nome é obrigatório.</value>
   </data>
+  <data name="OLDPASSWORD_DIFFERENT_CURRENT_NEWPASSWORD" xml:space="preserve">
+    <value>A senha que você digitou é diferente da senha atual.</value>
+  </data>
   <data name="PASSWORD_EQUAL" xml:space="preserve">
     <value>As senhas não são iguais.</value>
   </data>
