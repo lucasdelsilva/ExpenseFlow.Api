@@ -49,4 +49,13 @@ public class UserController : ControllerBase
         await useCase.ChangePassword(request);
         return NoContent();
     }
+
+    [HttpDelete]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> DeleteProfile([FromServices] IDeleteProfileUserUseCase useCase)
+    {
+        await useCase.DeleteProfile();
+        return NoContent();
+    }
 }
