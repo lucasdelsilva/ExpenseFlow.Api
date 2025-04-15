@@ -5,7 +5,7 @@ using System.Text.Json;
 namespace WebApi.Test.Users;
 public class ProfileUserTest : ExpenseFlowClassFixture
 {
-    private const string METHOD = "api/User/profile";
+    private const string METHOD = "api/user/profile";
     private readonly string _token;
     private readonly string _userName;
     private readonly string _userEmail;

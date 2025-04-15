@@ -144,6 +144,9 @@
   <data name="NAME_EMPTY" xml:space="preserve">
     <value>Name is required.</value>
   </data>
+  <data name="OLDPASSWORD_DIFFERENT_CURRENT_NEWPASSWORD" xml:space="preserve">
+    <value>The password you entered is different from the current password.</value>
+  </data>
   <data name="PASSWORD_EQUAL" xml:space="preserve">
     <value>The Password is not equals.</value>
   </data>

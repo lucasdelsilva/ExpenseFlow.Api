@@ -10,7 +10,7 @@ using WebApi.Test.InlineData;
 namespace WebApi.Test.Users;
 public class LoginUserTest : ExpenseFlowClassFixture
 {
-    private const string METHOD = "api/Login";
+    private const string METHOD = "api/login";
     private readonly string _email;
     private readonly string _name;
     private readonly string _password;

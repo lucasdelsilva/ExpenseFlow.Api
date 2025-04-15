@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExpenseFlow.Api.Controllers;
-[Route("api/[controller]")]
+[Route("api/user")]
 [ApiController]
 public class UserController : ControllerBase
 {
@@ -28,7 +28,7 @@ public class UserController : ControllerBase
         return Ok(response);
     }
 
-    [HttpPut]
+    [HttpPut("update")]
     [Authorize]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
@@ -36,6 +36,17 @@ public class UserController : ControllerBase
     public async Task<IActionResult> UpdateProfile([FromServices] IUpdateProfileUserUseCase useCase, RequestUpdateProfileUserJson request)
     {
         await useCase.UpdateProfile(request);
+        return NoContent();
+    }
+
+    [HttpPut("change-password")]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
+
+    public async Task<IActionResult> ChangePassword([FromServices] IChangePasswordUserUseCase useCase, RequestChangePasswordJson request)
+    {
+        await useCase.ChangePassword(request);
         return NoContent();
     }
 }

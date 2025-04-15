@@ -9,7 +9,7 @@ using WebApi.Test.InlineData;
 namespace WebApi.Test.Users;
 public class UpdateUserTest : ExpenseFlowClassFixture
 {
-    private const string METHOD = "api/User";
+    private const string METHOD = "api/user/update";
     private readonly string _token;
 
     public UpdateUserTest(CustomWebApplicationFactory webApplicationFactory) : base(webApplicationFactory)

@@ -9,7 +9,7 @@ using WebApi.Test.InlineData;
 namespace WebApi.Test.Users;
 public class RegisterUserTest : ExpenseFlowClassFixture
 {
-    private const string METHOD = "api/User";
+    private const string METHOD = "api/user";
 
     public RegisterUserTest(CustomWebApplicationFactory webApplicationFactory) : base(webApplicationFactory) { }
 
