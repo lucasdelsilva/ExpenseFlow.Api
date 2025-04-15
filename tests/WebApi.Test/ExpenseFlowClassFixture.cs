@@ -43,6 +43,14 @@ public class ExpenseFlowClassFixture : IClassFixture<CustomWebApplicationFactory
         return await _httpClient.PutAsJsonAsync(requestUri, request);
     }
 
+    protected async Task<HttpResponseMessage> DoPut(string requestUri, RequestUpdateProfileUserJson request, string token, string culture = "en")
+    {
+        AuthorizeRequest(token);
+        CultureRequest(culture);
+
+        return await _httpClient.PutAsJsonAsync(requestUri, request);
+    }
+
     private void AuthorizeRequest(string token)
     {
         if (string.IsNullOrWhiteSpace(token))

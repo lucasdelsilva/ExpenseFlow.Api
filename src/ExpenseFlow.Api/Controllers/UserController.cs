@@ -2,6 +2,7 @@
 using ExpenseFlow.Communication.Request;
 using ExpenseFlow.Communication.Response;
 using ExpenseFlow.Communication.Response.Errors;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExpenseFlow.Api.Controllers;
@@ -16,5 +17,25 @@ public class UserController : ControllerBase
     {
         var response = await useCase.Register(request);
         return Created(string.Empty, response);
+    }
+
+    [HttpGet("profile")]
+    [Authorize]
+    [ProducesResponseType(typeof(ResponseProfileUserJson), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetProfile([FromServices] IGetProfileUserUseCase useCase)
+    {
+        var response = await useCase.GetProfile();
+        return Ok(response);
+    }
+
+    [HttpPut]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
+
+    public async Task<IActionResult> UpdateProfile([FromServices] IUpdateProfileUserUseCase useCase, RequestUpdateProfileUserJson request)
+    {
+        await useCase.UpdateProfile(request);
+        return NoContent();
     }
 }
