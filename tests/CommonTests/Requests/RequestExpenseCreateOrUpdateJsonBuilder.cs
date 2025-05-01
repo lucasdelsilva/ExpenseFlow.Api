@@ -1,5 +1,5 @@
 ﻿using Bogus;
-using ExpenseFlow.Communication.Enums.Expenses;
+using ExpenseFlow.Communication.Enums;
 using ExpenseFlow.Communication.Request;
 
 namespace CommonTests.Requests;

@@ -2,6 +2,7 @@
 using CommonTests.Entities;
 using CommonTests.Repositories;
 using ExpenseFlow.Application.UseCases.Expenses;
+using ExpenseFlow.Communication.Enums;
 using ExpenseFlow.Domain.Entities;
 using ExpenseFlow.Exception;
 using ExpenseFlow.Exception.ExceptionBase;
@@ -26,7 +27,7 @@ public class ExpenseGetByIdUseCaseTest
         result.Description.Should().Be(expense.Description);
         result.Date.Should().Be(expense.Date);
         result.Amount.Should().Be(expense.Amount);
-        result.PaymentType.Should().Be((ExpenseFlow.Communication.Enums.Expenses.PaymentType)expense.PaymentType);
+        result.PaymentType.Should().Be((PaymentType)expense.PaymentType);
     }
 
     [Fact]

@@ -1,4 +1,4 @@
-﻿namespace ExpenseFlow.Communication.Enums.Expenses;
+﻿namespace ExpenseFlow.Communication.Enums;
 public enum PaymentType
 {
     Cash = 0,

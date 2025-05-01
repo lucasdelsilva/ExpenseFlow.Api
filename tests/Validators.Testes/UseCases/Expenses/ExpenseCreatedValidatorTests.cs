@@ -1,6 +1,6 @@
 ﻿using CommonTests.Requests;
 using ExpenseFlow.Application.UseCases.Expenses.Validator;
-using ExpenseFlow.Communication.Enums.Expenses;
+using ExpenseFlow.Communication.Enums;
 using ExpenseFlow.Exception;
 using FluentAssertions;
 

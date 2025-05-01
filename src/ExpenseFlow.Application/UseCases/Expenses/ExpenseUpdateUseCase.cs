@@ -35,6 +35,8 @@ public class ExpenseUpdateUseCase : IExpenseUpdateUseCase
         if (expense is null)
             throw new NotFoundException(ResourceErrorMessages.EXPENSE_NOT_FOUND);
 
+        expense.Tags.Clear();
+
         _mapper.Map(request, expense);
         _expensesWriteOnlyRepository.Update(expense);
 

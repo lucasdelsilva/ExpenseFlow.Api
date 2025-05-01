@@ -1,4 +1,4 @@
-﻿namespace ExpenseFlow.Domain.Enums;
+﻿namespace ExpenseFlow.Communication.Enums;
 public enum Tag
 {
     Health = 0,
