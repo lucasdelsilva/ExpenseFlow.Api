@@ -34,7 +34,13 @@ namespace CommonTests.Entities
                 .RuleFor(u => u.Date, faker => faker.Date.Past())
                 .RuleFor(u => u.Amount, faker => faker.Random.Decimal(min: 1, max: 1000))
                 .RuleFor(u => u.PaymentType, faker => faker.PickRandom<PaymentType>())
-                .RuleFor(u => u.UserId, _ => user.Id);
+                .RuleFor(u => u.UserId, _ => user.Id)
+                .RuleFor(r => r.Tags, faker => faker.Make(1, () => new ExpenseFlow.Domain.Entities.Tag
+                {
+                    Id = 1,
+                    Value = faker.PickRandom<ExpenseFlow.Domain.Enums.Tag>(),
+                    ExpenseId = 1
+                }));
         }
     }
 }

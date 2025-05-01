@@ -28,6 +28,8 @@ public class ExpenseGetByIdUseCaseTest
         result.Date.Should().Be(expense.Date);
         result.Amount.Should().Be(expense.Amount);
         result.PaymentType.Should().Be((PaymentType)expense.PaymentType);
+        result.Tags.Should().NotBeNullOrEmpty().And.BeEquivalentTo(expense.Tags.Select(x => x.Value));
+
     }
 
     [Fact]

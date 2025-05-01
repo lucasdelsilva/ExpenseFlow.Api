@@ -42,20 +42,27 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
     private void StartDataBase(ApplicationDbContext dbContext, IPasswordEncripter passwordEncripter, IAccessTokenGenerator accessTokenGenerator)
     {
         var userTeamMember = AddUserTeamMember(dbContext, passwordEncripter, accessTokenGenerator);
-        var expensesMember = AddExpenses(dbContext, userTeamMember, expenseId: 1);
+        var expensesMember = AddExpenses(dbContext, userTeamMember, expenseId: 1, tagId: 1);
         Expense_TeamMember = new ExpenseIdentityManager(expensesMember);
 
         var userAdmin = AddUserAdmin(dbContext, passwordEncripter, accessTokenGenerator);
-        var expensesAdmin = AddExpenses(dbContext, userAdmin, expenseId: 2);
+        var expensesAdmin = AddExpenses(dbContext, userAdmin, expenseId: 2, tagId: 2);
         Expense_TeamAdmin = new ExpenseIdentityManager(expensesAdmin);
 
         dbContext.SaveChanges();
     }
 
-    private Expense AddExpenses(ApplicationDbContext dbContext, User user, long expenseId)
+    private Expense AddExpenses(ApplicationDbContext dbContext, User user, long expenseId, long tagId)
     {
         var expense = ExpenseBuilder.Build(user);
         expense.Id = expenseId;
+
+        foreach (var tag in expense.Tags)
+        {
+            tag.Id = tagId;
+            tag.ExpenseId = expense.Id;
+        }
+
         dbContext.Expenses.Add(expense);
 
         return expense;

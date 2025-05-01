@@ -5,7 +5,7 @@ using ExpenseFlow.Exception;
 using FluentAssertions;
 
 namespace Validators.Tests.UseCases.Expenses;
-public class ExpenseCreatedValidatorTests
+public class ExpenseValidatorTests
 {
     [Fact]
     public void Success()
@@ -97,5 +97,23 @@ public class ExpenseCreatedValidatorTests
         result.Errors.Should().ContainSingle()
             .And.Contain(e => e.PropertyName.Equals("Amount")
             && e.ErrorMessage.Equals(ResourceErrorMessages.AMOUNT_MUST_BE_GREATER_THAN_ZERO));
+    }
+
+    [Fact]
+    public void Error_Enum_Tag_Invalid()
+    {
+        //Arange
+        var validator = new ExpenseValidator();
+        var request = RequestExpenseCreateOrUpdateJsonBuilder.Request();
+        request.Tags.Add((Tag)100);
+
+        //Act
+        var result = validator.Validate(request);
+
+        //Assert
+        result.IsValid.Should().BeFalse();
+        result.Errors.Should().ContainSingle()
+            .And.Contain(e => e.PropertyName.Equals("Tags[1]")
+            && e.ErrorMessage.Equals(ResourceErrorMessages.TAG_TYPE_NOT_SUPPORTED));
     }
 }
