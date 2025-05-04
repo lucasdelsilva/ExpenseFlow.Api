@@ -80,7 +80,7 @@ namespace ExpenseFlow.Infrastructure.Migrations
                     .IsRequired()
                     .HasColumnType("longtext");
 
-                b.Property<Guid>("UserIdentifier")
+                b.Property<Guid>("UserId")
                     .HasColumnType("char(36)");
 
                 b.HasKey("Id");
