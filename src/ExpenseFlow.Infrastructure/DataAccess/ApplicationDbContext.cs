@@ -13,18 +13,6 @@ public class ApplicationDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<Expense>()
-            .HasOne(e => e.User)
-            .WithMany()
-            .HasForeignKey(e => e.UserId)
-            .OnDelete(DeleteBehavior.Cascade);
-
         modelBuilder.Entity<Tag>().ToTable("Tags");
-
-        modelBuilder.Entity<Tag>()
-            .HasOne(t => t.Expense)
-            .WithMany(e => e.Tags)
-            .HasForeignKey(t => t.ExpenseId)
-            .OnDelete(DeleteBehavior.Cascade);
     }
 }
