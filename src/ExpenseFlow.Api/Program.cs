@@ -8,6 +8,7 @@ using ExpenseFlow.Infrastructure.DataAccess;
 using ExpenseFlow.Infrastructure.Extensions;
 using ExpenseFlow.Infrastructure.Migrations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -76,16 +77,19 @@ builder.Services.AddAuthentication(config =>
     };
 });
 
-builder.Services.AddHealthChecks()
-            .AddCheck("self", () => HealthCheckResult.Healthy(), tags: new[] { "self" })
-            .AddDbContextCheck<ApplicationDbContext>(
-                name: "database",
-                tags: new[] { "database" },
-                customTestQuery: async (context, token) =>
-                    await context.Database.CanConnectAsync(token));
 
+builder.Services.AddHealthChecks().AddDbContextCheck<ApplicationDbContext>();
 
 var app = builder.Build();
+app.MapHealthChecks("/api/health", new HealthCheckOptions
+{
+    AllowCachingResponses = false,
+    ResultStatusCodes =
+    {
+        [HealthStatus.Healthy] = StatusCodes.Status200OK,
+        [HealthStatus.Unhealthy] = StatusCodes.Status503ServiceUnavailable
+    }
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
