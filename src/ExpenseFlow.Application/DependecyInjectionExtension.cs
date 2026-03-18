@@ -18,7 +18,8 @@ public static class DependecyInjectionExtension
 
     public static void AddAutoMaper(IServiceCollection serviceDescriptors)
     {
-        serviceDescriptors.AddAutoMapper(typeof(AutoMapping));
+        // Newer AutoMapper.Extensions overloads expect a configuration action first, then profile marker types
+        serviceDescriptors.AddAutoMapper(cfg => { }, typeof(AutoMapping));
     }
 
     public static void AddUseCases(IServiceCollection serviceDescriptors)
